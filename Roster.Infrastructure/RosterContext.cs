@@ -17,8 +17,13 @@ public class RosterContext : DbContext
         modelBuilder.Entity<MembershipApplication>(entityTypeBuilder =>
         {
             entityTypeBuilder.HasKey(ma => ma.Username);
+
             entityTypeBuilder.Property<string>("_hashedPassword")
                              .HasColumnName("HashedPassword")
+                             .IsRequired();
+                             
+            entityTypeBuilder.Property<bool>("_accepted")
+                             .HasColumnName("Accepted")
                              .IsRequired();
         });
     }

@@ -25,12 +25,29 @@ public class RosterController : ControllerBase
     [HttpPost("apply")]
     public IActionResult Apply([FromBody] ApplyForMembershipCommand command)
     {
-        MembershipApplication app = new(command.FirstName, command.LastName, command.Username, command.Email, "");
-        app.Age = command.Age;
-        app.PhoneNumber = command.PhoneNumber;
+        MembershipApplication app = MembershipApplication.Submit(
+            command.FirstName,
+            command.LastName,
+            command.Username,
+            command.PlainTextPassword,
+            command.Email,
+            command.PhoneNumber,
+            command.Age);
+
         _context.MembershipApplications.Add(app);
         _context.SaveChanges();
-        
+
+        return Ok();
+    }
+
+    [HttpPatch("accept")]
+    public IActionResult Accept([FromBody] string username)
+    {
+        MembershipApplication membershipApplication = _context.Find<MembershipApplication>(username);
+        membershipApplication.Accept();
+
+        _context.SaveChanges();
+
         return Ok();
     }
 }
