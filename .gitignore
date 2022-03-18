@@ -455,3 +455,4 @@ $RECYCLE.BIN/
 
 # Roster db
 roster.db*
+package-lock.json
