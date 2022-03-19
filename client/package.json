@@ -1,13 +1,13 @@
 {
-  "name": "client",
+  "name": "roster",
   "version": "1.0.0",
-  "description": "",
-  "main": "submitApplication.js",
+  "description": "A simple JS frontend for Roster application.",
+  "main": "roster.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Milivoj Milani <https://github.com/milivojm>",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.26.1"
   }

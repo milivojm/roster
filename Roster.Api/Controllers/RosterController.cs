@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Roster.Core;
 using Roster.Infrastructure;
-using Roster.Core.Commands;
+using Roster.Api.Commands;
 
 namespace Roster.Api.Controllers;
 
@@ -22,6 +22,12 @@ public class RosterController : ControllerBase
         return _context.MembershipApplications;
     }
 
+    [HttpGet("membership-applications/{username}")]
+    public MembershipApplication GetMembershipApplication(string username)
+    {
+        return _context.MembershipApplications.Find(username);
+    }
+
     [HttpPost("apply")]
     public IActionResult Apply([FromBody] ApplyForMembershipCommand command)
     {
@@ -40,14 +46,48 @@ public class RosterController : ControllerBase
         return Ok();
     }
 
-    [HttpPatch("accept")]
-    public IActionResult Accept([FromBody] string username)
+    [HttpPost("accept/{username}")]
+    public IActionResult Accept(string username)
     {
         MembershipApplication membershipApplication = _context.Find<MembershipApplication>(username);
         membershipApplication.Accept();
 
         _context.SaveChanges();
 
+        return Ok();
+    }
+
+    [HttpPost("clear")]
+    public IActionResult Clear()
+    {
+        var all = _context.MembershipApplications;
+        _context.MembershipApplications.RemoveRange(all);
+        _context.SaveChanges();
+
+        return Ok();
+    }
+
+    [HttpDelete("delete/{username}")]
+    public IActionResult Delete(string username)
+    {
+        var membershipApplication = _context.MembershipApplications.Find(username);
+        _context.MembershipApplications.Remove(membershipApplication);
+        _context.SaveChanges();
+
+        return Ok();
+    }
+
+    [HttpPatch("update")]
+    public IActionResult Update([FromBody] UpdateMembershipApplicationCommand command)
+    {
+        var membershipApplication = _context.MembershipApplications.Find(command.Username);
+        membershipApplication.FirstName = command.FirstName;
+        membershipApplication.LastName = command.LastName;
+        membershipApplication.Email = command.Email;
+        membershipApplication.PhoneNumber = command.PhoneNumber;
+        membershipApplication.Age = command.Age;
+        _context.SaveChanges();
+        
         return Ok();
     }
 }
