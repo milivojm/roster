@@ -43,7 +43,7 @@ async function example() {
         position: 'fullback'
     };
 
-    membershipApplication.flexfield = JSON.stringify(customData);
+    membershipApplication.flexfield = customData;
     await roster.update(membershipApplication);
 
     // get application
