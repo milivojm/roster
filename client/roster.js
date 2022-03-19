@@ -1,4 +1,5 @@
 const axios = require('axios');
+const ApplyForMembershipCommand = require('./applyForMembershipCommand');
 
 class Roster {
     _baseUrl = 'http://mmilani-001-site1.ftempurl.com';
@@ -53,4 +54,7 @@ class Roster {
     }
 }
 
-module.exports = Roster;
+module.exports = {
+    Roster,
+    ApplyForMembershipCommand
+};

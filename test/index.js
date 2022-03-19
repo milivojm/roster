@@ -1,15 +1,15 @@
-const Roster = require('./roster');
+const { Roster, ApplyForMembershipCommand } = require('@milivojm/roster');
 
 async function example() {
-    const roster = new Roster();
+    const roster = new Roster('http://localhost:5194');
 
-    const membershipApplication = {
-        firstName: "John",
-        lastName: "Doe",
-        username: "jdoe",
-        email: "jdoe@gmail.com",
-        plainTextPassword: "passwd"
-    }
+    const membershipApplication = new ApplyForMembershipCommand('jdoe','passwd','jdoe@gmail.com');
+    membershipApplication.firstName = 'John';
+    membershipApplication.lastName = 'Doe';
+    membershipApplication.age = 30;
+    membershipApplication.flexfield = {
+        gameProfile: 'johndoe123'
+    };
 
     // clears all applications!!!
     await roster.clear();
@@ -47,3 +47,4 @@ async function example() {
 }
 
 example();
+
