@@ -9,7 +9,7 @@ This is just a short example how to use Roster Membership API.
 const { Roster, ApplyForMembershipCommand } = require('@milivojm/roster');
 
 async function example() {
-    const roster = new Roster('http://localhost:5194');
+    const roster = new Roster();
 
     const membershipApplication = new ApplyForMembershipCommand('jdoe','passwd','jdoe@gmail.com');
     membershipApplication.firstName = 'John';
