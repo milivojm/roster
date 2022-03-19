@@ -4,41 +4,46 @@ async function example() {
     const roster = new Roster();
 
     const membershipApplication = {
-        username: 'jdoe',
-        firstName: 'John',
-        lastName: 'Doe',
-        plainTextPassword: 'test',
-        email: 'jdoe@gmail.com'
+        firstName: "John",
+        lastName: "Doe",
+        username: "jdoe",
+        email: "jdoe@gmail.com",
+        plainTextPassword: "passwd"
+    }
+
+    // clears all applications!!!
+    await roster.clear();
+
+    // submit new application
+    await roster.apply(membershipApplication);
+
+    // get all applications
+    const apps = await roster.membershipApplications();
+    console.log(apps);
+
+    // accept application
+    await roster.accept(membershipApplication.username);
+
+    // change e-mail and age
+    membershipApplication.email = 'newmail@gmail.com';
+    membershipApplication.age = 23;
+    await roster.update(membershipApplication);
+
+    // store custom data
+    const customData = {
+        dateOfBirth: '2010/03/01',
+        position: 'fullback'
     };
 
-    try {
-        // clears all applications!!!
-        await roster.clear();
+    membershipApplication.flexfield = JSON.stringify(customData);
+    await roster.update(membershipApplication);
 
-        // submit new application
-        await roster.submitApplication(membershipApplication);
+    // get application
+    const lastApp = await roster.one('jdoe');
+    console.log('After acceptance >>>', lastApp);
 
-        // get all applications
-        const apps = await roster.membershipApplications();
-        console.log(apps);
-
-        // accept application
-        await roster.accept(membershipApplication.username);
-
-        // change e-mail and age
-        membershipApplication.email = 'newmail@gmail.com';
-        membershipApplication.age = 23;
-        await roster.update(membershipApplication);
-
-        // get application
-        const lastApp = await roster.one('jdoe');
-        console.log('After acceptance >>>', lastApp);
-
-        // delete application
-        await roster.delete(membershipApplication.username);
-    } catch (err) {
-        console.log('Error in submitting application.', err);
-    }
+    // delete application
+    await roster.delete(membershipApplication.username);
 }
 
 example();

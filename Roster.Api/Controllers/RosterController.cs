@@ -10,10 +10,12 @@ namespace Roster.Api.Controllers;
 public class RosterController : ControllerBase
 {
     readonly RosterContext _context;
+    readonly ILogger<RosterController> _logger;
 
-    public RosterController(RosterContext rosterContext)
+    public RosterController(RosterContext rosterContext, ILogger<RosterController> logger)
     {
         _context = rosterContext;
+        _logger = logger;
     }
 
     [HttpGet("membership-applications")]
@@ -32,13 +34,14 @@ public class RosterController : ControllerBase
     public IActionResult Apply([FromBody] ApplyForMembershipCommand command)
     {
         MembershipApplication app = MembershipApplication.Submit(
-            command.FirstName,
-            command.LastName,
             command.Username,
             command.PlainTextPassword,
             command.Email,
+            command.FirstName,
+            command.LastName,
             command.PhoneNumber,
-            command.Age);
+            command.Age,
+            command.Flexfield);
 
         _context.MembershipApplications.Add(app);
         _context.SaveChanges();
@@ -49,7 +52,7 @@ public class RosterController : ControllerBase
     [HttpPost("accept/{username}")]
     public IActionResult Accept(string username)
     {
-        MembershipApplication membershipApplication = _context.Find<MembershipApplication>(username);
+        MembershipApplication membershipApplication = _context.MembershipApplications.Find(username);
         membershipApplication.Accept();
 
         _context.SaveChanges();
@@ -86,8 +89,9 @@ public class RosterController : ControllerBase
         membershipApplication.Email = command.Email;
         membershipApplication.PhoneNumber = command.PhoneNumber;
         membershipApplication.Age = command.Age;
+        membershipApplication.Flexfield = command.Flexfield;
         _context.SaveChanges();
-        
+
         return Ok();
     }
 }

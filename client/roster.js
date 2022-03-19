@@ -17,7 +17,7 @@ class Roster {
         this._baseUrl = value;
     }
 
-    submitApplication(membershipApplication) {
+    apply(membershipApplication) {
         const url = `${this._baseUrl}/roster/apply`;
         return axios.post(url, membershipApplication);
     }

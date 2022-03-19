@@ -4,7 +4,7 @@
 
 namespace Roster.Api.Migrations
 {
-    public partial class _01_MembershipApplications : Migration
+    public partial class _01_initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,11 +13,13 @@ namespace Roster.Api.Migrations
                 columns: table => new
                 {
                     Username = table.Column<string>(type: "TEXT", nullable: false),
-                    FirstName = table.Column<string>(type: "TEXT", nullable: false),
-                    LastName = table.Column<string>(type: "TEXT", nullable: false),
+                    FirstName = table.Column<string>(type: "TEXT", nullable: true),
+                    LastName = table.Column<string>(type: "TEXT", nullable: true),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
                     Age = table.Column<int>(type: "INTEGER", nullable: true),
+                    Flexfield = table.Column<string>(type: "TEXT", nullable: true),
+                    Accepted = table.Column<bool>(type: "INTEGER", nullable: false),
                     HashedPassword = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>

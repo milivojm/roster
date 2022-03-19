@@ -11,8 +11,8 @@ using Roster.Infrastructure;
 namespace Roster.Api.Migrations
 {
     [DbContext(typeof(RosterContext))]
-    [Migration("20220312095103_01_MembershipApplications")]
-    partial class _01_MembershipApplications
+    [Migration("20220319105904_01_initial")]
+    partial class _01_initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,15 +32,20 @@ namespace Roster.Api.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Flexfield")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("_accepted")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("Accepted");
 
                     b.Property<string>("_hashedPassword")
                         .IsRequired()
