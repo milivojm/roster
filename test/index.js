@@ -4,11 +4,8 @@ async function example() {
     const roster = new Roster();
 
     const membershipApplication = new ApplyForMembershipCommand('jdoe','passwd','jdoe@gmail.com');
-    membershipApplication.firstName = 'John';
-    membershipApplication.lastName = 'Doe';
-    membershipApplication.age = 30;
     membershipApplication.flexfield = {
-        gameProfile: 'johndoe123'
+        gameName: 'jdoe1'
     };
 
     // clears all applications!!!
